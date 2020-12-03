@@ -15,8 +15,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
 
 function html() {
-  return src('src/*.html')
-    .pipe(dest('public'))
+  return src('src/*.{html, ico}')
+    .pipe(plumber())
+    .pipe(dest('dist'))
     .pipe(sync.stream());
 }
 
@@ -25,7 +26,7 @@ function style() {
     .pipe(plumber())
     .pipe(sass())
     .pipe(groupmq())
-    .pipe(dest('public/css'))
+    .pipe(dest('dist/css'))
     .pipe(sync.stream())
     .pipe(autoprefixer({
       overrideBrowserslist: ['last 5 versions'],
@@ -33,7 +34,7 @@ function style() {
     }))
     .pipe(minify())
     .pipe(rename('main.min.css'))
-    .pipe(dest('public/css'));
+    .pipe(dest('dist/css'));
 
 }
 
@@ -46,14 +47,14 @@ function js() {
     .pipe(sourcemaps.init())
     .pipe(rollup({}))
     .pipe(sourcemaps.write(''))
-    .pipe(dest('public/js'))
+    .pipe(dest('dist/js'))
     .pipe(sync.stream());
 }
 
 function serve() {
   sync.init({
     server: {
-      baseDir: './public'
+      baseDir: './dist'
     },
     port: 3000,
     notify: false,
@@ -74,17 +75,16 @@ function copy() {
     'src/fonts/**/*.{woff, woff2}',
     'src/img/*.*'
   ], { base: '.' })
-    .pipe(dest('public'));
+    .pipe(dest('dist'));
 }
 
 
 function clean() {
-  return del('public');
+  return del('dist');
 }
 
 const build = gulp.series(clean, gulp.parallel(html, style, js));
 const start = gulp.parallel(build, serve);
-
 
 
 exports.clean = clean;
