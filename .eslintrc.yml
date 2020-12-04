@@ -7,4 +7,4 @@ env:
 
 extends: 'htmlacademy/es6'
 rules:
-  ["single"]
+  quotes: 'off'
