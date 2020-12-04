@@ -8,35 +8,51 @@ function getElementFromTemplate(template) {
   return container;
 }
 
-const screenTemplate = (level) => `
-  <div class="quest">
-    <p class="text">
-      ${level.text}
-    </p>
-    <input type="text" id="quest__input">
-    <ul class="answers">
-      ${
-        [...Object.entries(level.answers)].map(([answer]) => {
-          return `<li class="answer">${answer.toUpperCase()}</li>`;
-        }).join('')
-      }
-    </ul>  
-  </div>
-  <div class="result"></div>
-  <small>Для справки введите <i>help</i></small>
-`;
+function screenTemplate(level) {
+  return `
+    <div class="quest">
+      <p class="text">
+        ${level.text}
+      </p>
+      <input type="text" id="quest__input">
+      <ul class="answers">
+        ${
+          [...Object.entries(level.answers)].map(([answer]) => {
+            return `<li class="answer">${answer.toUpperCase()}</li>`;
+          }).join('')
+        }
+      </ul>  
+    </div>
+    <div class="result"></div>
+    <small>Для справки введите <i>help</i></small>
+  `;
+}
+
 
 const container = document.querySelector('#main');
-const screenElement = getElementFromTemplate(screenTemplate(levels[INITIAL_STATE.level]));
 const headerElement = getElementFromTemplate(headerTemplate);
 
-container.append(headerElement, screenElement);
+container.before(headerElement);
 
-const input = document.querySelector('#quest__input');
-input.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    input.value = '';
-  }
-});
+function renderScreen(state) {
+  const screen = getElementFromTemplate(screenTemplate(levels[state.level]));
+  container.innerHTML = '';
+  container.append(screen);
 
-input.focus();
+  const input = document.querySelector('#quest__input');
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const userAnswer = input.value.trim();
+      const destination = userAnswer.toLowerCase() in levels[state.level].answers
+        ? levels[state.level].answers[userAnswer]
+        : null;
+
+      if (destination) {
+        renderScreen(Object.assign({}, state, {'level': destination}));
+      }
+    }
+  });
+  input.focus();
+}
+
+renderScreen(INITIAL_STATE);
