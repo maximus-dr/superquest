@@ -27,15 +27,14 @@ function style() {
     .pipe(sass())
     .pipe(groupmq())
     .pipe(dest('dist/css'))
-    .pipe(sync.stream())
     .pipe(autoprefixer({
       overrideBrowserslist: ['last 5 versions'],
       cascade: true
     }))
     .pipe(minify())
     .pipe(rename('main.min.css'))
-    .pipe(dest('dist/css'));
-
+    .pipe(dest('dist/css'))
+    .pipe(sync.stream());
 }
 
 function js() {
@@ -61,7 +60,7 @@ function serve() {
     open: true
   });
 
-  gulp.watch('src/sass/**/*.{sass, scss}', style);
+  gulp.watch('src/sass/**/*.scss', style);
   gulp.watch('src/*.html').on('change', e => {
     if (e.type !== 'deleted') {
       html();
@@ -70,13 +69,13 @@ function serve() {
   gulp.watch('src/js/**/*.js', js);
 }
 
-function copy() {
-  return src([
-    'src/fonts/**/*.{woff, woff2}',
-    'src/img/*.*'
-  ], { base: '.' })
-    .pipe(dest('dist'));
-}
+// function copy() {
+//   return src([
+//     'src/fonts/**/*.{woff, woff2}',
+//     'src/img/*.*'
+//   ], { base: '.' })
+//     .pipe(dest('dist'));
+// }
 
 
 function clean() {
@@ -86,7 +85,7 @@ function clean() {
 const build = gulp.series(clean, gulp.parallel(html, style, js));
 const start = gulp.parallel(build, serve);
 
-
+exports.style = style;
 exports.clean = clean;
 exports.build = build;
 exports.start = start;
