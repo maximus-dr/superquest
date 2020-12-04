@@ -17,7 +17,7 @@ function screenTemplate(level) {
       <input type="text" id="quest__input">
       <ul class="answers">
         ${
-          [...Object.entries(level.answers)].map(([answer]) => {
+          Object.entries(level.answers).map(([answer]) => {
             return `<li class="answer">${answer.toUpperCase()}</li>`;
           }).join('')
         }
@@ -42,8 +42,8 @@ function renderScreen(state) {
   const input = document.querySelector('#quest__input');
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const userAnswer = input.value.trim();
-      const destination = userAnswer.toLowerCase() in levels[state.level].answers
+      const userAnswer = input.value.trim().toLowerCase();
+      const destination = userAnswer in levels[state.level].answers
         ? levels[state.level].answers[userAnswer]
         : null;
 
