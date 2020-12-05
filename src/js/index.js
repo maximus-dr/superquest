@@ -8,7 +8,7 @@ function getElementFromTemplate(template) {
   return container;
 }
 
-function screenTemplate(level) {
+function getAnswers(level) {
   const answers = level.answers.map((answer) => {
     return `
       <li class="answer">
@@ -17,6 +17,10 @@ function screenTemplate(level) {
     `;
   });
 
+  return answers.join('');
+}
+
+function screenTemplate(level) {
   return `
     <div class="quest">
       <p class="text">
@@ -24,7 +28,7 @@ function screenTemplate(level) {
       </p>
       <input type="text" id="quest__input">
       <ul class="answers">
-        ${answers.join('')}
+        ${getAnswers(level)}
       </ul>  
     </div>
     <div class="result"></div>
@@ -39,7 +43,9 @@ const headerElement = getElementFromTemplate(headerTemplate);
 container.before(headerElement);
 
 function renderScreen(state) {
-  const screen = getElementFromTemplate(screenTemplate(levels[state.level]));
+  const current = state.level;
+  const template = screenTemplate(levels[current]);
+  const screen = getElementFromTemplate(template);
   container.innerHTML = '';
   container.append(screen);
 
