@@ -9,6 +9,14 @@ function getElementFromTemplate(template) {
 }
 
 function screenTemplate(level) {
+  const answers = level.answers.map((answer) => {
+    return `
+      <li class="answer">
+        ${answer.action.toUpperCase() + '. ' + answer.title}
+      </li>
+    `;
+  });
+
   return `
     <div class="quest">
       <p class="text">
@@ -16,11 +24,7 @@ function screenTemplate(level) {
       </p>
       <input type="text" id="quest__input">
       <ul class="answers">
-        ${
-          Object.entries(level.answers).map(([answer]) => {
-            return `<li class="answer">${answer.toUpperCase()}</li>`;
-          }).join('')
-        }
+        ${answers.join('')}
       </ul>  
     </div>
     <div class="result"></div>
