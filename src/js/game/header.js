@@ -1,21 +1,28 @@
-import {INITIAL_STATE} from '../data/data';
+import AbstractView from "../abstract-view";
 
-const headerTemplate = (state) => `
-  <header class="header">
-  <div>Мир: ${state.level}</div>
-  <div>
-    Жизни:
-    ${new Array(3 - state.lives)
-      .fill('<span class="heart__empty">♡</span>')
-      .join('')
-    }
-    ${new Array(state.lives)
-      .fill('<span class="heart__full">♥</span>')
-      .join('')
-    }
-  </div>
-  <div>Время: 0</div>
-  </header>
-`;
+export default class Header extends AbstractView {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
 
-export default headerTemplate(INITIAL_STATE);
+  get template() {
+    return `
+      <header class="header">
+      <div>Мир: ${this.state.level}</div>
+      <div>
+        Жизни:
+        ${new Array(3 - this.state.lives)
+          .fill('<span class="heart__empty">♡</span>')
+          .join('')
+        }
+        ${new Array(this.state.lives)
+          .fill('<span class="heart__full">♥</span>')
+          .join('')
+        }
+      </div>
+      <div>Время: 0</div>
+      </header>
+    `;
+  }
+}

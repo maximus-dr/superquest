@@ -1,5 +1,5 @@
 import {INITIAL_STATE, levels} from './data/data';
-import headerTemplate from './game/header';
+import Header from './game/header';
 import {getElementFromTemplate} from './util';
 
 
@@ -33,9 +33,9 @@ function screenTemplate(level) {
 
 
 const container = document.querySelector('#main');
-const headerElement = getElementFromTemplate(headerTemplate);
+const header = new Header(INITIAL_STATE).render();
 
-container.before(headerElement);
+container.before(header);
 
 function renderScreen(state) {
   const current = state.level;
