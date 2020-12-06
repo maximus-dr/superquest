@@ -1,4 +1,4 @@
-import {INITIAL_STATE} from './data/data';
+import {INITIAL_STATE} from '../data/data';
 
 const headerTemplate = (state) => `
   <header class="header">
