@@ -1,35 +1,6 @@
 import {INITIAL_STATE, levels} from './data/data';
 import Header from './game/header';
-import {getElementFromTemplate} from './util';
-
-
-function getAnswers(level) {
-  const answers = level.answers.map((answer) => {
-    return `
-      <li class="answer">
-        ${answer.action.toUpperCase() + '. ' + answer.title}
-      </li>
-    `;
-  });
-
-  return answers.join('');
-}
-
-function screenTemplate(level) {
-  return `
-    <div class="quest">
-      <p class="text">
-        ${level.text}
-      </p>
-      <input type="text" id="quest__input">
-      <ul class="answers">
-        ${getAnswers(level)}
-      </ul>  
-    </div>
-    <div class="result"></div>
-    <small>Для справки введите <i>help</i></small>
-  `;
-}
+import Level from './game/level';
 
 
 const container = document.querySelector('#main');
@@ -39,8 +10,8 @@ container.before(header);
 
 function renderScreen(state) {
   const current = state.level;
-  const template = screenTemplate(levels[current]);
-  const screen = getElementFromTemplate(template);
+  const level = levels[current];
+  const screen = new Level(level).render();
   container.innerHTML = '';
   container.append(screen);
 
