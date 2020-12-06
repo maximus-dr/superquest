@@ -1,12 +1,7 @@
 import {INITIAL_STATE, levels} from './data/data';
-import headerTemplate from './header';
+import headerTemplate from './game/header';
+import {getElementFromTemplate} from './util';
 
-
-function getElementFromTemplate(template) {
-  const container = document.createElement('div');
-  container.innerHTML = template;
-  return container;
-}
 
 function getAnswers(level) {
   const answers = level.answers.map((answer) => {
