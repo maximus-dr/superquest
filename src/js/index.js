@@ -1,6 +1,6 @@
 import {INITIAL_STATE, levels} from './data/data';
-import Header from './game/header';
-import Level from './game/level';
+import Header from './components/header';
+import Level from './components/level';
 
 
 const container = document.querySelector('#main');
