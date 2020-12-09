@@ -2,7 +2,7 @@
 export class Game {
 
   constructor(state) {
-    this._state = { ...state };
+    this._state = {...state};
     this.listeners = new Set();
   }
 
@@ -11,7 +11,7 @@ export class Game {
   }
 
   set state(newState) {
-    this._state = { ...newState };
+    this._state = {...newState};
     this.broadcast();
   }
 

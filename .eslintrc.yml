@@ -8,3 +8,4 @@ env:
 extends: 'htmlacademy/es6'
 rules:
   quotes: 'off'
+  parser: 'babel-eslint'
