@@ -4,14 +4,14 @@ import Level from './components/level';
 
 
 const container = document.querySelector('#main');
-const header = new Header(INITIAL_STATE).render();
+const header = new Header(INITIAL_STATE).element;
 
 container.before(header);
 
 function renderScreen(state) {
   const current = state.level;
   const level = levels[current];
-  const screen = new Level(level).render();
+  const screen = new Level(level).element;
   container.innerHTML = '';
   container.append(screen);
 

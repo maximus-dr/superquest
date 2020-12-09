@@ -14,13 +14,9 @@ export default class AbstractView {
     if (this._element) {
       return this._element;
     }
-    this.element = this.render();
+    this._element = getElementFromTemplate(this.template);
     this.bind(this._element);
     return this._element;
-  }
-
-  render() {
-    return getElementFromTemplate(this.template);
   }
 
   bind(element) {
