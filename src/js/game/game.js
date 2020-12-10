@@ -10,6 +10,7 @@ const INITIAL_STATE = Object.freeze({
   time: 0
 });
 
+
 export class Game {
 
   init() {
@@ -22,10 +23,12 @@ export class Game {
     this.render(this.header.element);
     this.render(this.level.element);
     this.updateLives(this.store.state);
+    this.updateLevelText = this.updateLevelText.bind(this);
 
     this.store.subscribe(this.updateLevel);
     this.store.subscribe(this.updateLives);
     this.store.subscribe(this.updateTime);
+    this.store.subscribe(this.updateLevelText);
   }
 
   updateLevel(state) {
@@ -61,6 +64,12 @@ export class Game {
 
   stopTimer() {
     clearInterval(this.store._timerId);
+  }
+
+  updateLevelText(state) {
+    const field = document.querySelector('.quest__text');
+    const level = this.store.getLevel(state.level);
+    field.textContent = level.text;
   }
 
   render(component) {

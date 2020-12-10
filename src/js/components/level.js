@@ -10,7 +10,7 @@ export default class Level extends AbstractView {
   get template() {
     return `
       <div class="quest">
-        <p class="text">
+        <p class="quest__text">
           ${this.level.text}
         </p>
         <input type="text" id="quest__input">

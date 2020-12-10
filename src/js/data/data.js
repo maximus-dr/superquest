@@ -9,15 +9,18 @@ export const levels = {
     answers: [
       {
         action: 'left',
-        title: 'Вы побежите влево, от гриба'
+        title: 'Вы побежите влево, от гриба',
+        result: 'DIE'
       },
       {
         action: 'jump',
-        title: 'Вы прыгнете вверх'
+        title: 'Вы прыгнете вверх',
+        result: 'NEXT_LEVEL'
       },
       {
         action: 'right',
-        title: 'Вы прыгнете вверх'
+        title: 'Вы побежите вправо, прямо на гриб',
+        result: 'DIE'
       }
     ]
   },
@@ -28,7 +31,8 @@ export const levels = {
     answers: [
       {
         action: 'jump',
-        title: 'Как что, конечно же подпрыгну и со всей силы ударюсь головой о железяку!'
+        title: 'Как что, конечно же подпрыгну и со всей силы ударюсь головой о железяку!',
+        result: 'NEXT_LEVEL'
       }
     ]
   },
@@ -40,7 +44,8 @@ export const levels = {
     answers: [
       {
         action: '1',
-        title: ' Конечно же съесть его!'
+        title: ' Конечно же съесть его!',
+        result: 'WIN'
       }
     ]
   }
