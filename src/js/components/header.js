@@ -9,7 +9,10 @@ export default class Header extends AbstractView {
   get template() {
     return `
       <header class="header">
-      <div>Мир: ${this.state.level}</div>
+      <div class="header__level">
+        <span>Мир: </span> 
+        <span class="header__level-field">${this.state.level}</span>
+      </div>
       <div>
         Жизни:
         ${new Array(3 - this.state.lives)

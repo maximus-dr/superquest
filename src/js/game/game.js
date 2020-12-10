@@ -20,7 +20,14 @@ export class Game {
 
     this.render(this.header.element);
     this.render(this.level.element);
-    this.store.changeLevel('level-2');
+
+    this.store.subscribe(this.updateLevel);
+
+  }
+
+  updateLevel(state) {
+    const levelField = document.querySelector('.header__level-field');
+    levelField.innerHTML = state.level;
   }
 
   tick() {

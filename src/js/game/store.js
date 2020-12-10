@@ -15,7 +15,7 @@ export class Store {
 
   set state(newState) {
     this._state = {...newState};
-    this.broadcast();
+    this.broadcast(this.state);
   }
 
   subscribe(listener) {
@@ -26,9 +26,9 @@ export class Store {
     this.listeners.delete(listener);
   }
 
-  broadcast() {
+  broadcast(state) {
     for (const listener of this.listeners) {
-      listener();
+      listener(state);
     }
   }
 
