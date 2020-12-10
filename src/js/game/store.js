@@ -53,4 +53,8 @@ export class Store {
   tick() {
     this.update({time: this.state.time + 1});
   }
+
+  die() {
+    this.update({lives: this.state.lives - 1});
+  }
 }
