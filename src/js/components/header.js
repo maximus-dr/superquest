@@ -9,15 +9,18 @@ export default class Header extends AbstractView {
   get template() {
     return `
       <header class="header">
-      <div class="header__level">
-        <span>Мир: </span> 
-        <span class="header__level-field">${this.state.level}</span>
-      </div>
-      <div>
-        <span>Жизни:</span>
-        <span class="header__lives-field"></span>
-      </div>
-      <div>Время: 0</div>
+        <div class="header__level">
+          <span>Мир: </span> 
+          <span class="header__level-field">${this.state.level}</span>
+        </div>
+        <div>
+          <span>Жизни:</span>
+          <span class="header__lives-field"></span>
+        </div>
+        <div>
+          <span>Время: </span>
+          <span class="header__time-field">0</span>
+        </div>
       </header>
     `;
   }

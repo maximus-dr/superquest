@@ -25,6 +25,7 @@ export class Game {
 
     this.store.subscribe(this.updateLevel);
     this.store.subscribe(this.updateLives);
+    this.store.subscribe(this.updateTime);
   }
 
   updateLevel(state) {
@@ -49,12 +50,13 @@ export class Game {
     field.innerHTML = template;
   }
 
-  tick() {
-    this.store.update({time: this.store.state.time + 1});
+  updateTime(state) {
+    const field = document.querySelector('.header__time-field');
+    field.innerHTML = state.time;
   }
 
   startTimer() {
-    this.store._timerId = setInterval(() => this.tick(), 1000);
+    this.store._timerId = setInterval(() => this.store.tick(), 1000);
   }
 
   stopTimer() {

@@ -49,4 +49,8 @@ export class Store {
       throw new Error(`${level} not found`);
     }
   }
+
+  tick() {
+    this.update({time: this.state.time + 1});
+  }
 }
