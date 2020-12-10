@@ -19,7 +19,7 @@ export class Game {
 
     const currentLevel = levels[this.store.state.level];
     this.level = new Level(currentLevel);
-
+    this.level.element.querySelector('#quest__input').focus();
     this.render(this.header.element);
     this.render(this.level.element);
     this.updateLives(this.store.state);
@@ -75,6 +75,11 @@ export class Game {
   render(component) {
     const app = document.querySelector('.app');
     app.append(component);
+  }
+
+  focus() {
+    const input = document.querySelector('#quest__input');
+    input.focus();
   }
 }
 

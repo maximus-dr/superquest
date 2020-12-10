@@ -15,7 +15,7 @@ export const levels = {
       {
         action: 'jump',
         title: 'Вы прыгнете вверх',
-        result: 'NEXT_LEVEL'
+        result: 'NEXT_LEVEL',
       },
       {
         action: 'right',
