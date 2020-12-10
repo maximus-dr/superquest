@@ -1,47 +1,44 @@
+import {Store} from "./store";
+import Header from './../components/header';
+import Level from './../components/level';
+import {levels} from "../data/data";
+
+
+const INITIAL_STATE = Object.freeze({
+  level: 'level-0',
+  lives: 3,
+  time: 0
+});
 
 export class Game {
+  init() {
+    this.store = new Store(INITIAL_STATE);
+    this.header = new Header(this.store.state);
 
-  constructor(state) {
-    this._state = {...state};
-    this.listeners = new Set();
-  }
+    const currentLevel = levels[this.store.state.level];
+    this.level = new Level(currentLevel);
 
-  get state() {
-    return this._state;
-  }
-
-  set state(newState) {
-    this._state = {...newState};
-    this.broadcast();
-  }
-
-  subscribe(listener) {
-    this.listeners.add(listener);
-  }
-
-  unsubscribe(listener) {
-    this.listeners.delete(listener);
-  }
-
-  broadcast() {
-    for (const listener of this.listeners) {
-      listener();
-    }
-  }
-
-  update(param) {
-    this.state = Object.assign(this._state, param);
+    this.render(this.header.element);
+    this.render(this.level.element);
+    this.store.changeLevel('level-2');
   }
 
   tick() {
-    this.update({time: this.state.time + 1});
+    this.store.update({time: this.store.state.time + 1});
   }
 
   startTimer() {
-    this._timerId = setInterval(() => this.tick(), 1000);
+    this.store._timerId = setInterval(() => this.tick(), 1000);
   }
 
   stopTimer() {
-    clearInterval(this._timerId)
+    clearInterval(this.store._timerId);
+  }
+
+  render(component) {
+    const app = document.querySelector('.app');
+    app.append(component);
   }
 }
+
+export const game = new Game();

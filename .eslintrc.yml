@@ -1,4 +1,6 @@
+
 parserOptions:
+  ecmaVersion: 2018
   sourceType: 'module'
 
 env:
@@ -8,4 +10,4 @@ env:
 extends: 'htmlacademy/es6'
 rules:
   quotes: 'off'
-  parser: 'babel-eslint'
+  strict: 0

@@ -1,4 +1,3 @@
-import { app } from "./app";
+import {game} from './game/game';
 
-
-app.init();
+game.init();

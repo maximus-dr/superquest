@@ -1,8 +1,3 @@
-export const INITIAL_STATE = Object.freeze({
-  level: 'level-0',
-  lives: 3,
-  time: 0
-});
 
 export const levels = {
   'level-0': {
