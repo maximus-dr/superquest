@@ -14,15 +14,8 @@ export default class Header extends AbstractView {
         <span class="header__level-field">${this.state.level}</span>
       </div>
       <div>
-        Жизни:
-        ${new Array(3 - this.state.lives)
-          .fill('<span class="heart__empty">♡</span>')
-          .join('')
-        }
-        ${new Array(this.state.lives)
-          .fill('<span class="heart__full">♥</span>')
-          .join('')
-        }
+        <span>Жизни:</span>
+        <span class="header__lives-field"></span>
       </div>
       <div>Время: 0</div>
       </header>

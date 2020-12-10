@@ -11,6 +11,7 @@ const INITIAL_STATE = Object.freeze({
 });
 
 export class Game {
+
   init() {
     this.store = new Store(INITIAL_STATE);
     this.header = new Header(this.store.state);
@@ -20,14 +21,32 @@ export class Game {
 
     this.render(this.header.element);
     this.render(this.level.element);
+    this.updateLives(this.store.state);
 
     this.store.subscribe(this.updateLevel);
-
+    this.store.subscribe(this.updateLives);
   }
 
   updateLevel(state) {
-    const levelField = document.querySelector('.header__level-field');
-    levelField.innerHTML = state.level;
+    const field = document.querySelector('.header__level-field');
+    field.innerHTML = state.level;
+  }
+
+  updateLives(state) {
+    const field = document.querySelector('.header__lives-field');
+    const max = INITIAL_STATE.lives;
+
+    const template = `
+      ${new Array(max - state.lives)
+        .fill('<span class="heart__empty">♡</span>')
+        .join('')
+      }
+      ${new Array(state.lives)
+        .fill('<span class="heart__full">♥</span>')
+        .join('')
+      }
+    `;
+    field.innerHTML = template;
   }
 
   tick() {
