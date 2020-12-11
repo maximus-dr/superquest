@@ -1,7 +1,7 @@
 import {Store} from "./store";
 import Header from './../components/header';
 import Level from './../components/level';
-import {levels} from "../data/data";
+import Footer from './../components/footer';
 
 
 const INITIAL_STATE = Object.freeze({
@@ -16,27 +16,25 @@ export class Game {
   init() {
     this.store = new Store(INITIAL_STATE);
     this.header = new Header(this.store.state);
-
-    const currentLevel = levels[this.store.state.level];
-    this.level = new Level(currentLevel);
+    this.footer = new Footer();
+    this.level = new Level(this.store.currentLevel);
 
     this.render([
       this.header.element,
-      this.level.element
+      this.level.element,
+      this.footer.element
     ]);
     this.updateLives(this.store.state);
     this.focus();
     this.bind([
       'updateLevel',
       'updateLives',
-      'updateTime',
-      'updateLevelText'
+      'updateTime'
     ]);
     this.subscribe([
       this.updateLevel,
       this.updateLives,
-      this.updateTime,
-      this.updateLevelText
+      this.updateTime
     ]);
   }
 
@@ -57,11 +55,6 @@ export class Game {
     for (const component of components) {
       app.append(component);
     }
-  }
-
-  updateLevel(state) {
-    const field = this.header.element.querySelector('.header__level-field');
-    field.innerHTML = state.level;
   }
 
   updateLives(state) {
@@ -94,9 +87,19 @@ export class Game {
     clearInterval(this.store._timerId);
   }
 
+  updateLevel(state) {
+    this.updateLevelTitle(state);
+    this.updateLevelText(state);
+  }
+
+  updateLevelTitle(state) {
+    const field = this.header.element.querySelector('.header__level-field');
+    field.innerHTML = state.level;
+  }
+
   updateLevelText(state) {
-    const field = document.querySelector('.quest__text');
-    const level = this.store.getLevel(state.level);
+    const field = this.level.element.querySelector('.quest__text');
+    const level = this.store.currentLevel;
     field.textContent = level.text;
   }
 

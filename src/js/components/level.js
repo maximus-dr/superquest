@@ -18,8 +18,6 @@ export default class Level extends AbstractView {
           ${this._getAnswers(this.level)}
         </ul>  
       </div>
-      <div class="result"></div>
-      <small>Для справки введите <i>help</i></small>
     `;
   }
 
