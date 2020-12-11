@@ -15,13 +15,13 @@ export default class Level extends AbstractView {
         </p>
         <input type="text" id="quest__input">
         <ul class="answers">
-          ${this._getAnswers(this.level)}
+          ${this.getAnswers(this.level)}
         </ul>  
       </div>
     `;
   }
 
-  _getAnswers(level) {
+  getAnswers(level) {
     const answers = level.answers.map((answer) => {
       return `
         <li class="answer">

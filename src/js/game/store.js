@@ -14,12 +14,12 @@ export class Store {
 
   set state(newState) {
     this._state = {...newState};
+    this.currentLevel = this.getCurrentLevel();
     this.broadcast(this.state);
   }
 
   update(prop) {
     this.state = Object.assign(this._state, prop);
-    this.currentLevel = this.getCurrentLevel();
   }
 
   subscribe(listener) {

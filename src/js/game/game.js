@@ -90,6 +90,7 @@ export class Game {
   updateLevel(state) {
     this.updateLevelTitle(state);
     this.updateLevelText(state);
+    this.updateAnswers();
   }
 
   updateLevelTitle(state) {
@@ -101,6 +102,12 @@ export class Game {
     const field = this.level.element.querySelector('.quest__text');
     const level = this.store.currentLevel;
     field.textContent = level.text;
+  }
+
+  updateAnswers() {
+    const answersList = this.level.element.querySelector('.answers');
+    const answers = this.level.getAnswers(this.store.currentLevel);
+    answersList.innerHTML = answers;
   }
 
   focus() {
