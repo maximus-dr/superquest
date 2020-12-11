@@ -32,8 +32,8 @@ export class Store {
     }
   }
 
-  update(param) {
-    this.state = Object.assign(this._state, param);
+  update(prop) {
+    this.state = Object.assign(this._state, prop);
   }
 
   getLevel(level) {

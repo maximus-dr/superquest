@@ -29,12 +29,13 @@ export class Game {
     this.bind([
       'updateLevel',
       'updateLives',
+      'updateTime',
       'updateLevelText'
     ]);
     this.subscribe([
       this.updateLevel,
       this.updateLives,
-      this.updateLevelText,
+      this.updateTime,
       this.updateLevelText
     ]);
   }
