@@ -19,25 +19,52 @@ export class Game {
 
     const currentLevel = levels[this.store.state.level];
     this.level = new Level(currentLevel);
-    this.level.element.querySelector('#quest__input').focus();
-    this.render(this.header.element);
-    this.render(this.level.element);
-    this.updateLives(this.store.state);
-    this.updateLevelText = this.updateLevelText.bind(this);
 
-    this.store.subscribe(this.updateLevel);
-    this.store.subscribe(this.updateLives);
-    this.store.subscribe(this.updateTime);
-    this.store.subscribe(this.updateLevelText);
+    this.render([
+      this.header.element,
+      this.level.element
+    ]);
+    this.updateLives(this.store.state);
+    this.focus();
+    this.bind([
+      'updateLevel',
+      'updateLives',
+      'updateLevelText'
+    ]);
+    this.subscribe([
+      this.updateLevel,
+      this.updateLives,
+      this.updateLevelText,
+      this.updateLevelText
+    ]);
+  }
+
+  bind(methods) {
+    for (const method of methods) {
+      this[method] = this[method].bind(this);
+    }
+  }
+
+  subscribe(listeners) {
+    for (const listener of listeners) {
+      this.store.subscribe(listener);
+    }
+  }
+
+  render(components) {
+    const app = document.querySelector('.app');
+    for (const component of components) {
+      app.append(component);
+    }
   }
 
   updateLevel(state) {
-    const field = document.querySelector('.header__level-field');
+    const field = this.header.element.querySelector('.header__level-field');
     field.innerHTML = state.level;
   }
 
   updateLives(state) {
-    const field = document.querySelector('.header__lives-field');
+    const field = this.header.element.querySelector('.header__lives-field');
     const max = INITIAL_STATE.lives;
 
     const template = `
@@ -54,7 +81,7 @@ export class Game {
   }
 
   updateTime(state) {
-    const field = document.querySelector('.header__time-field');
+    const field = this.header.element.querySelector('.header__time-field');
     field.innerHTML = state.time;
   }
 
@@ -72,14 +99,8 @@ export class Game {
     field.textContent = level.text;
   }
 
-  render(component) {
-    const app = document.querySelector('.app');
-    app.append(component);
-  }
-
   focus() {
-    const input = document.querySelector('#quest__input');
-    input.focus();
+    this.level.element.querySelector('#quest__input').focus();
   }
 }
 
