@@ -12,7 +12,7 @@ const INITIAL_STATE = Object.freeze({
 
 const ENTER_KEYCODE = 13;
 
-export class Game {
+export default class Game {
 
   init() {
     this.store = new Store(INITIAL_STATE);
@@ -47,6 +47,7 @@ export class Game {
         this.input.value = '';
       }
     });
+    this.startTimer();
   }
 
   bind(methods) {

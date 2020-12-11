@@ -1,4 +1,3 @@
-import {game} from './game/game';
+import App from './app';
 
-game.init();
-game.startTimer();
+App.startGame();
