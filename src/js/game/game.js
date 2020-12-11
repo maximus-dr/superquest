@@ -10,14 +10,16 @@ const INITIAL_STATE = Object.freeze({
   time: 0
 });
 
+const ENTER_KEYCODE = 13;
 
 export class Game {
 
   init() {
     this.store = new Store(INITIAL_STATE);
     this.header = new Header(this.store.state);
-    this.footer = new Footer();
     this.level = new Level(this.store.currentLevel);
+    this.footer = new Footer();
+    this.input = this.level.element.querySelector('#quest__input');
 
     this.render([
       this.header.element,
@@ -25,7 +27,7 @@ export class Game {
       this.footer.element
     ]);
     this.updateLives(this.store.state);
-    this.focus();
+
     this.bind([
       'updateLevel',
       'updateLives',
@@ -36,6 +38,15 @@ export class Game {
       this.updateLives,
       this.updateTime
     ]);
+
+    this.input.focus();
+    this.input.addEventListener('keydown', (evt) => {
+      if (evt.keyCode === ENTER_KEYCODE) {
+        const value = evt.target.value;
+        this.onInputEnter(value);
+        this.input.value = '';
+      }
+    });
   }
 
   bind(methods) {
@@ -98,7 +109,7 @@ export class Game {
     field.innerHTML = state.level;
   }
 
-  updateLevelText(state) {
+  updateLevelText() {
     const field = this.level.element.querySelector('.quest__text');
     const level = this.store.currentLevel;
     field.textContent = level.text;
@@ -110,9 +121,48 @@ export class Game {
     answersList.innerHTML = answers;
   }
 
-  focus() {
-    this.level.element.querySelector('#quest__input').focus();
+  onInputEnter(value) {
+    const userAnswer = String(value).trim().toLowerCase();
+    let result = null;
+
+    if (userAnswer === 'help') {
+      result = 'help';
+    } else {
+      // finds coincidences between userAnswer and available answers
+      for (let answer of this.store.currentLevel.answers) {
+        if (userAnswer === answer.action) {
+          result = answer.result;
+        }
+      }
+    }
+
+    if (result) {
+      this.onAnswer(result);
+    }
   }
+
+  onAnswer(result) {
+    switch (result) {
+      case 'DIE':
+        this.store.die();
+        break;
+      case 'NEXT_LEVEL':
+        this.store.next();
+        break;
+      case 'WIN':
+        this.win();
+        break;
+      case 'help':
+        this.help();
+        break;
+      default:
+        throw new Error(`Unknown result: ${result}`);
+    }
+  }
+
+  win() {}
+
+  help() {}
 }
 
 export const game = new Game();
