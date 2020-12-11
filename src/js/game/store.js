@@ -4,8 +4,8 @@ import {levels} from './../data/data';
 export class Store {
 
   constructor(state) {
-    this._state = {...state};
     this.levels = levels;
+    this._state = {...state};
     this.listeners = new Set();
   }
 
@@ -16,6 +16,10 @@ export class Store {
   set state(newState) {
     this._state = {...newState};
     this.broadcast(this.state);
+  }
+
+  update(prop) {
+    this.state = Object.assign(this._state, prop);
   }
 
   subscribe(listener) {
@@ -32,10 +36,6 @@ export class Store {
     }
   }
 
-  update(prop) {
-    this.state = Object.assign(this._state, prop);
-  }
-
   getLevel(level) {
     return this.levels[level];
   }
@@ -50,11 +50,20 @@ export class Store {
     }
   }
 
-  tick() {
-    this.update({time: this.state.time + 1});
+  next() {
+    const next = this.getLevel(this.state.level).next;
+    if (next) {
+      this.changeLevel(next);
+    } else {
+      throw new Error('No next level found');
+    }
   }
 
   die() {
     this.update({lives: this.state.lives - 1});
+  }
+
+  tick() {
+    this.update({time: this.state.time + 1});
   }
 }
