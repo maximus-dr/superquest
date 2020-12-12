@@ -2,6 +2,7 @@ import Intro from './components/screens/intro';
 import Game from './game/game';
 import GameOver from './components/screens/game-over';
 import Stats from './components/screens/stats';
+import Win from './components/screens/win';
 const main = document.querySelector('#main');
 
 
@@ -33,5 +34,11 @@ export default class App {
     main.innerHTML = '';
     const gameOver = new GameOver();
     render(gameOver.element);
+  }
+
+  static showWin() {
+    main.innerHTML = '';
+    const win = new Win();
+    render(win.element);
   }
 }

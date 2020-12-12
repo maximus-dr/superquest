@@ -33,6 +33,7 @@ export default class Game {
       'updateLives',
       'updateTime'
     ]);
+
     this.subscribe([
       this.updateLevel,
       this.updateLives,
@@ -146,12 +147,13 @@ export default class Game {
     switch (result) {
       case 'DIE':
         this.store.die();
+        this.showResult(`Вы потеряли жизнь. Осталось жизней: ${this.store.state.lives}`);
         break;
       case 'NEXT_LEVEL':
         this.store.next();
         break;
       case 'WIN':
-        this.win();
+        this.store.win();
         break;
       case 'help':
         this.help();
@@ -161,7 +163,10 @@ export default class Game {
     }
   }
 
-  win() {}
+  showResult(value) {
+    const container = this.footer.element.querySelector('.result');
+    container.innerHTML = value;
+  }
 
   help() {}
 }

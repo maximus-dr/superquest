@@ -1,5 +1,7 @@
-
 import {levels} from './../data/data';
+import App from './../app';
+
+
 export class Store {
 
   constructor(state) {
@@ -55,9 +57,16 @@ export class Store {
 
   die() {
     this.update({lives: this.state.lives - 1});
+    if (this.state.lives === 0) {
+      App.gameOver();
+    }
   }
 
   tick() {
     this.update({time: this.state.time + 1});
+  }
+
+  win() {
+    App.showWin();
   }
 }
