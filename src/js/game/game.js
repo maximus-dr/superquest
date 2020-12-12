@@ -156,7 +156,7 @@ export default class Game {
         this.store.win();
         break;
       case 'help':
-        this.help();
+        this.store.help();
         break;
       default:
         throw new Error(`Unknown result: ${result}`);
@@ -167,8 +167,6 @@ export default class Game {
     const container = this.footer.element.querySelector('.result');
     container.innerHTML = value;
   }
-
-  help() {}
 }
 
 export const game = new Game();

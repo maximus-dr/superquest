@@ -3,6 +3,7 @@ import Game from './game/game';
 import GameOver from './components/screens/game-over';
 import Stats from './components/screens/stats';
 import Win from './components/screens/win';
+import Help from './components/screens/help';
 const main = document.querySelector('#main');
 
 
@@ -40,5 +41,11 @@ export default class App {
     main.innerHTML = '';
     const win = new Win();
     render(win.element);
+  }
+
+  static showHelp() {
+    main.innerHTML = '';
+    const help = new Help();
+    render(help.element);
   }
 }

@@ -69,4 +69,8 @@ export class Store {
   win() {
     App.showWin();
   }
+
+  help() {
+    App.showHelp();
+  }
 }
