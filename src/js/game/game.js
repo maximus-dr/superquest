@@ -168,5 +168,3 @@ export default class Game {
     container.innerHTML = value;
   }
 }
-
-export const game = new Game();
